@@ -3,7 +3,8 @@
 本文为在k2p路由器使用padavan(N56U/改华硕)固件安装配置v2ray的简单流程，相关的配置请参考官方文档。其他型号路由器理论上类似，可以参考。
 
 ## 重要提示：
-* 由于v2ray体积较大，需要自行编译路由器固件，增大storage分区的大小，可以先fork一下[https://github.com/hanwckf/rt-n56u](https://github.com/hanwckf/rt-n56u)，然后根据自己的需要修改配置文件，目前使用的是自编译的K2P_DRV，如果有需要可以在我的repositories里找[rt-n56u](https://github.com/felix-fly/rt-n56u)。
+
+由于v2ray体积较大，需要自行编译路由器固件，增大storage分区的大小，可以先fork一下[https://github.com/hanwckf/rt-n56u](https://github.com/hanwckf/rt-n56u)，然后根据自己的需要修改配置文件，目前使用的是自编译的K2P_DRV，如果有需要可以在我的repositories里找[rt-n56u](https://github.com/felix-fly/rt-n56u)。
 
 需要修改3个文件，本文将storage分区大小调整为6mb，修改时注意进制及单位：
 
