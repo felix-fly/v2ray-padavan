@@ -7,9 +7,9 @@
 
 需要修改3个文件，本文将storage分区大小调整为6mb，修改时注意进制及单位：
 
-trunk/configs/templates/K2P_DRV.config [修改记录](https://github.com/felix-fly/rt-n56u/commit/cf50f6aca5b7ee3eaf4cbe634510692591b6d261)
-trunk/configs/boards/K2P/kernel-3.4.x.config [修改记录](https://github.com/felix-fly/rt-n56u/commit/d406d2113b93ac45c88436115d84422feb52e13d)
-trunk/user/scripts/mtd_storage.sh [修改记录](https://github.com/felix-fly/rt-n56u/commit/6fdc378d7866f421876827f252cc6ecb42cf42f3)
+* trunk/configs/templates/K2P_DRV.config [修改记录](https://github.com/felix-fly/rt-n56u/commit/cf50f6aca5b7ee3eaf4cbe634510692591b6d261)
+* trunk/configs/boards/K2P/kernel-3.4.x.config [修改记录](https://github.com/felix-fly/rt-n56u/commit/d406d2113b93ac45c88436115d84422feb52e13d)
+* trunk/user/scripts/mtd_storage.sh [修改记录](https://github.com/felix-fly/rt-n56u/commit/6fdc378d7866f421876827f252cc6ecb42cf42f3)
 
 ## 获取最新版本的v2ray
 
