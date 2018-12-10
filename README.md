@@ -2,6 +2,8 @@
 
 本文为在k2p路由器使用padavan(N56U/改华硕)固件安装配置v2ray的简单流程，相关的配置请参考官方文档。其他型号路由器理论上类似，可以参考。
 
+为了方便小伙伴们，这里给出了一个[配置样例](./client-config.json)供参考。注意替换==包含的内容为你自己的配置，路由部分使用自定义的site文件，支持gw上网及各种广告过滤，site.dat文件可以从[v2ray-adlist](https://github.com/felix-fly/v2ray-adlist)获取最新版。
+
 ## 重要提示：
 
 由于v2ray体积较大，需要自行编译路由器固件，增大storage分区的大小，可以先fork一下[https://github.com/hanwckf/rt-n56u](https://github.com/hanwckf/rt-n56u)，然后根据自己的需要修改配置文件，目前使用的是自编译的K2P_DRV，如果有需要可以在我的repositories里找[rt-n56u](https://github.com/felix-fly/rt-n56u)。
@@ -88,3 +90,8 @@ padavan系统文件系统是构建在内存中的，重启后软件及配置会�
 由于v2ray程序比较大，提交保存操作需要一定的时间，点过提交后请耐心等待1分钟，以确保写入成功。
 
 如果一切顺利，重启路由器后你想要的v2ray依然在默默守护着你。Good luck!
+
+## 更新记录
+2018-12-10
+* 增加了客户端配置样例，方便使用
+
