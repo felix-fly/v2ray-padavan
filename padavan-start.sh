@@ -5,7 +5,7 @@ ROOT=/etc/storage/v2ray
 # limit vsz to 32mb (you can change it according to your device)
 ulimit -v 32678
 # Only use v2ray via pb config without v2ctl on low flash machine
-$ROOT/v2ray -config=$ROOT/config.pb -format=pb
+$ROOT/v2ray -config=$ROOT/config.pb -format=pb > /dev/null 2>&1 &
 
 # set iptables rules
 iptables -t nat -N V2RAY
