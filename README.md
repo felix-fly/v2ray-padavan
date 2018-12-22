@@ -52,12 +52,12 @@ chmod +x v2ray
 ```
 #!/bin/sh
 
-ROOT=/etc/storage/v2ray
+cd /etc/storage/v2ray
 
 # limit vsz to 32mb (you can change it according to your device)
 ulimit -v 32678
 # Only use v2ray via pb config without v2ctl on low flash machine
-$ROOT/v2ray -config=$ROOT/config.pb -format=pb
+./v2ray -config=./config.pb -format=pb &
 
 # set iptables rules
 iptables -t nat -N V2RAY
@@ -78,7 +78,7 @@ iptables -t nat -A OUTPUT -p tcp -j V2RAY
 
 ```
 # 增加一行
-/etc/storage/v2ray/padavan-start.sh &
+/etc/storage/v2ray/padavan-start.sh
 ```
 
 ## 保存软件及配置
