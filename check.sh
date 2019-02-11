@@ -5,7 +5,7 @@ cd /etc/storage/v2ray
 sleep 30
 
 while true; do
-    server=`ps aux | grep v2ray | grep -v grep`
+    server=`ps | grep v2ray | grep -v grep`
     if [ ! "$server" ]; then
         ulimit -v 65536
         ./v2ray -config=./config.pb -format=pb &
