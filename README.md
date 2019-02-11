@@ -34,7 +34,7 @@
 
 ## 上传软件
 
-一共需要3个文件：v2ray、config.pb、padavan-start.sh (后面提供)
+一共需要4个文件：v2ray、config.pb、start.sh (后面提供)、check.sh（非必须）
 
 ```
 mkdir /etc/storage/v2ray
@@ -43,7 +43,7 @@ cd /etc/storage/v2ray
 chmod +x v2ray
 ```
 
-## 启动脚本（padavan-start.sh）
+## 启动脚本（start.sh）
 
 透明代理部分使用iptables实现，如果不需要可自行删减修改。
 
@@ -54,8 +54,8 @@ chmod +x v2ray
 
 cd /etc/storage/v2ray
 
-# limit vsz to 32mb (you can change it according to your device)
-ulimit -v 32678
+# limit vsz to 64mb (you can change it according to your device)
+ulimit -v 65536
 # Only use v2ray via pb config without v2ctl on low flash machine
 ./v2ray -config=./config.pb -format=pb &
 
@@ -70,15 +70,37 @@ iptables -t nat -A PREROUTING -p tcp -j V2RAY
 iptables -t nat -A OUTPUT -p tcp -j V2RAY
 ```
 
-[点此直接下载padavan-start.sh文件](./padavan-start.sh)
+[点此直接下载start.sh文件](./start.sh)
+
+## 守护脚本（check.sh）
+
+```
+#!/bin/sh
+
+cd /etc/storage/v2ray
+
+sleep 30
+
+while true; do
+    server=`ps aux | grep v2ray | grep -v grep`
+    if [ ! "$server" ]; then
+        ulimit -v 65536
+        ./v2ray -config=./config.pb -format=pb &
+        sleep 30
+    fi
+    sleep 30
+done
+```
+[点此直接下载check.sh文件](./check.sh)
 
 ## 设置v2ray开机自动启动
 
 **高级设置 -> 自定义设置 -> 脚本 -> 在防火墙规则启动后执行:**
 
 ```
-# 增加一行
-/etc/storage/v2ray/padavan-start.sh
+# 增加两行
+/etc/storage/v2ray/start.sh
+/etc/storage/v2ray/check.sh &
 ```
 
 ## 保存软件及配置
@@ -92,6 +114,10 @@ padavan系统文件系统是构建在内存中的，重启后软件及配置会�
 如果一切顺利，重启路由器后你想要的v2ray依然在默默守护着你。Good luck!
 
 ## 更新记录
+
+2019-02-11
+* 增加了守护脚本，自动重启v2ray
+
 2018-12-10
 * 增加了客户端配置样例，方便使用
 

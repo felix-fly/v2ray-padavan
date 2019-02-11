@@ -2,8 +2,8 @@
 
 cd /etc/storage/v2ray
 
-# limit vsz to 32mb (you can change it according to your device)
-ulimit -v 32678
+# limit vsz to 64mb (you can change it according to your device)
+ulimit -v 65536
 # Only use v2ray via pb config without v2ctl on low flash machine
 ./v2ray -config=./config.pb -format=pb &
 
