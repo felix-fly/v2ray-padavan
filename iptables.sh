@@ -1,12 +1,5 @@
 #!/bin/sh
 
-cd /etc/storage/v2ray
-
-# limit vsz to 64mb (you can change it according to your device)
-ulimit -v 65536
-# Only use v2ray via pb config without v2ctl on low flash machine
-./v2ray -config=./config.pb -format=pb &
-
 # set iptables rules
 iptables -t nat -N V2RAY
 iptables -t nat -A V2RAY -d 0.0.0.0/8 -j RETURN
