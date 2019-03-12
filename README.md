@@ -18,6 +18,8 @@
 
 下载路由器硬件对应平台的压缩包到电脑并解压。以k2p为例的话是mipsle。解压后需要对原程序进行压缩，标准体积太大了~12mb，压缩使用upx，一个给程序加壳的小工具，压缩后不足4mb，这样才好放到路由器里。
 
+**更新：在我的[v2ray-openwrt](https://github.com/felix-fly/v2ray-openwrt)里增加了压缩流程的相关说明，需要的话移步前去查看。**
+
 ## 生成pb文件
 
 由于路由器内存较小，v2ray + v2ctl原始程序体积较大，即使压缩后也比较可观（约8mb）。使用pb文件时v2ray运行可以不依赖v2ctl，节约内存空间。使用pd的缺点是不能在路由中直接修改配置文件了，好在一般这个改动不会很频繁。
@@ -34,7 +36,7 @@
 
 ## 上传软件
 
-一共需要4个文件：v2ray、config.pb、start.sh (后面提供)、check.sh（非必须）
+一共需要4个文件：v2ray、config.pb、iptables.sh、check.sh
 
 ```
 mkdir /etc/storage/v2ray
@@ -43,7 +45,7 @@ cd /etc/storage/v2ray
 chmod +x v2ray
 ```
 
-## 启动脚本（start.sh）
+## 透明代理（iptables.sh）
 
 透明代理部分使用iptables实现，如果不需要可自行删减修改。
 
@@ -51,13 +53,6 @@ chmod +x v2ray
 
 ```
 #!/bin/sh
-
-cd /etc/storage/v2ray
-
-# limit vsz to 64mb (you can change it according to your device)
-ulimit -v 65536
-# Only use v2ray via pb config without v2ctl on low flash machine
-./v2ray -config=./config.pb -format=pb &
 
 # set iptables rules
 iptables -t nat -N V2RAY
@@ -70,9 +65,11 @@ iptables -t nat -A PREROUTING -p tcp -j V2RAY
 iptables -t nat -A OUTPUT -p tcp -j V2RAY
 ```
 
-[点此直接下载start.sh文件](./start.sh)
+[点此直接下载 iptables.sh文件](./iptables.sh)
 
-## 守护脚本（check.sh）
+## 启动/守护脚本（check.sh）
+
+上次添加了守护脚本后，发现有时会出现多个进程同时存在的情况，导致cpu居高不下直至路由系统挂掉，猜测可能是脚本加在防火墙启动后调用导致，未证实。
 
 ```
 #!/bin/sh
@@ -95,12 +92,18 @@ done
 
 ## 设置v2ray开机自动启动
 
+**高级设置 -> 自定义设置 -> 脚本 -> 在路由器启动后执行:**
+
+```
+# 增加一行
+/etc/storage/v2ray/check.sh &
+```
+
 **高级设置 -> 自定义设置 -> 脚本 -> 在防火墙规则启动后执行:**
 
 ```
-# 增加两行
-/etc/storage/v2ray/start.sh
-/etc/storage/v2ray/check.sh &
+# 增加一行
+/etc/storage/v2ray/iptables.sh
 ```
 
 ## 保存软件及配置
@@ -114,6 +117,8 @@ padavan系统文件系统是构建在内存中的，重启后软件及配置会�
 如果一切顺利，重启路由器后你想要的v2ray依然在默默守护着你。Good luck!
 
 ## 更新记录
+2019-03-12
+* 修改了脚本及启动方式
 
 2019-02-11
 * 增加了守护脚本，自动重启v2ray
