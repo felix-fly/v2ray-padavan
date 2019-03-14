@@ -2,14 +2,16 @@
 
 cd /etc/storage/v2ray
 
-sleep 30
+sleep 5
 
 while true; do
     server=`ps | grep v2ray | grep -v grep`
     if [ ! "$server" ]; then
         ulimit -v 65536
+        # Use this with pb config
         ./v2ray -config=./config.pb -format=pb &
-        sleep 30
+        # Use this with json config
+        #./v2ray &
     fi
-    sleep 30
+    sleep 60
 done
