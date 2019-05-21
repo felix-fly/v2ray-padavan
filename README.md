@@ -1,3 +1,5 @@
+## **出于某些考虑，所有项目迁移到同名码云仓库，此处只保留历史版本，不再更新。请移步 https://gitee.com/felix-fly/v2ray-padavan**
+
 # v2ray-padavan
 
 本文为在k2p路由器使用padavan(N56U/改华硕)固件安装配置v2ray的简单流程，相关的配置请参考官方文档。其他型号路由器理论上类似，可以参考。
