@@ -1,5 +1,3 @@
-## **出于某些考虑，所有项目迁移到同名码云仓库，此处只保留历史版本，不再更新。请移步 https://gitee.com/felix-fly/v2ray-padavan**
-
 # v2ray-padavan
 
 本文为在k2p路由器使用padavan(N56U/改华硕)固件安装配置v2ray的简单流程，相关的配置请参考官方文档。其他型号路由器理论上类似，可以参考。
@@ -18,27 +16,13 @@
 
 ## 获取最新版本的v2ray
 
-下载路由器硬件对应平台的压缩包到电脑并解压。以k2p为例的话是mipsle。解压后需要对原程序进行压缩，标准体积太大了~12mb，压缩使用upx，一个给程序加壳的小工具，压缩后不足4mb，这样才好放到路由器里。
+**更新：在我的[v2ray-openwrt](https://github.com/felix-fly/v2ray-openwrt)里增加了压缩流程的相关说明，需要的话移步前去查看。release下有已经整合编译并压缩过的v2ray可以直接下载使用，直接支持读取json配置文件，不用额外转换。**
 
-**更新：在我的[v2ray-openwrt](https://github.com/felix-fly/v2ray-openwrt)里增加了压缩流程的相关说明，需要的话移步前去查看。**
-
-## 生成pb文件
-
-由于路由器内存较小，v2ray + v2ctl原始程序体积较大，即使压缩后也比较可观（约8mb）。使用pb文件时v2ray运行可以不依赖v2ctl，节约内存空间。使用pd的缺点是不能在路由中直接修改配置文件了，好在一般这个改动不会很频繁。
-
-在电脑上使用v2ctl转换json配置文件，配置文件自行百度。
-
-```
-# linux系统下载linux版的v2ray
-./v2ctl config < ./config.json > ./config.pb
-
-# windows下安装git后也可以，下载windows版的v2ray
-./v2ctl.exe config < ./config.json > ./config.pb
-```
+下载路由器硬件对应平台的压缩包到电脑并解压。以k2p为例的话是mipsle。解压后得到v2ray单文件，文件已经使用upx压缩过，体积比官方的小，一般不超过4mb，这样才好放到路由器里。
 
 ## 上传软件
 
-一共需要4个文件：v2ray、config.pb、iptables.sh、check.sh
+一共需要4个文件：v2ray、config.conf、iptables.sh、check.sh
 
 ```
 mkdir /etc/storage/v2ray
@@ -84,10 +68,7 @@ while true; do
     server=`ps | grep -e "v2ray[[:space:]]\|v2ray$" | grep -v grep`
     if [ ! "$server" ]; then
         ulimit -v 65536
-        # Use this with pb config
-        ./v2ray -config=./config.pb -format=pb &
-        # Use this with json config
-        #./v2ray &
+        ./v2ray &
     fi
     sleep 60
 done
@@ -121,6 +102,9 @@ padavan系统文件系统是构建在内存中的，重启后软件及配置会�
 如果一切顺利，重启路由器后你想要的v2ray依然在默默守护着你。Good luck!
 
 ## 更新记录
+2019-06-07
+* 去掉pb文件相关描述
+
 2019-03-12
 * 修改了脚本及启动方式
 

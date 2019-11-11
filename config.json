@@ -45,7 +45,7 @@
             },
             "tlsSettings" : {
                 "serverName" : "==YOUR DOMAIN or SERVER ADDRESS==",
-                "allowInsecure" : false
+                "allowInsecure" : true
             }
         }
     }],
